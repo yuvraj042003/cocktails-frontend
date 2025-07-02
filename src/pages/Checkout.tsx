@@ -17,7 +17,7 @@ const stripePromise = loadStripe(STRIPE_PUBLISHABLE_KEY);
 
 const Checkout = () => {
   const navigate = useNavigate();
-  const { items, totalAmount } = useCart();
+  const { items, totalPrice } = useCart();
   const { user } = useAuth();
   const { clientSecret, createPaymentIntent } = useStripe();
   const { toast } = useToast();
@@ -38,7 +38,7 @@ const Checkout = () => {
     const initializePayment = async () => {
       try {
         setIsInitializing(true);
-        await createPaymentIntent(totalAmount + 50); // Including delivery fee
+        await createPaymentIntent(totalPrice + 50); // Including delivery fee
       } catch (error) {
         console.error('Failed to initialize payment:', error);
         toast({
@@ -53,7 +53,7 @@ const Checkout = () => {
     };
 
     initializePayment();
-  }, [user, items, navigate, createPaymentIntent, totalAmount, toast]);
+  }, [user, items, navigate, createPaymentIntent, totalPrice, toast]);
 
   if (items.length === 0 || isInitializing) {
     return (
@@ -64,7 +64,7 @@ const Checkout = () => {
     );
   }
 
-  const finalAmount = totalAmount + 50; // Including delivery fee
+  const finalAmount = totalPrice + 50; // Including delivery fee
 
   return (
     <div className="container max-w-2xl py-16">
@@ -77,16 +77,16 @@ const Checkout = () => {
             <div key={item.id} className="flex justify-between">
               <div>
                 <span className="font-medium">{item.name}</span>
-                <span className="text-muted-foreground"> × {item.quantity}</span>
+                <span className="text-muted-foreground"> × {item.quantity || 1}</span>
               </div>
-              <span>₹{item.price * item.quantity}</span>
+              <span>₹{item.price * (item.quantity || 1)}</span>
             </div>
           ))}
           
           <div className="border-t pt-4 space-y-2">
             <div className="flex justify-between text-muted-foreground">
               <span>Subtotal</span>
-              <span>₹{totalAmount}</span>
+              <span>₹{totalPrice}</span>
             </div>
             <div className="flex justify-between text-muted-foreground">
               <span>Delivery Fee</span>

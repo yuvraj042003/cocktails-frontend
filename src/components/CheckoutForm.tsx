@@ -33,7 +33,7 @@ const CheckoutForm = ({ amount }: CheckoutFormProps) => {
 
     try {
       // Create a payment intent
-      const { clientSecret } = await createPaymentIntent(amount);
+      await createPaymentIntent(amount);
 
       // Confirm the payment
       const { error, paymentIntent } = await stripe.confirmPayment({

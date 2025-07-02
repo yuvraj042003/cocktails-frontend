@@ -13,7 +13,7 @@ export const StripeProvider = ({ children }: { children: ReactNode }) => {
 
   const createPaymentIntent = async (amount: number) => {
     try {
-      const response = await api.post('/payment/create-payment-intent', { amount });
+      const response = await api.createPaymentIntent(amount);
       const { clientSecret } = response.data;
       setClientSecret(clientSecret);
       return { clientSecret };

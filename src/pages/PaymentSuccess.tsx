@@ -1,11 +1,9 @@
 import { useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const PaymentSuccess = () => {
-  const navigate = useNavigate();
-
   useEffect(() => {
     // Clear cart or perform other post-payment actions here
   }, []);

@@ -3,7 +3,6 @@ import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useAuth } from '@/contexts/AuthContext'
-import { useToast } from '@/components/ui/use-toast'
 
 const Login = () => {
   const [email, setEmail] = useState('')
@@ -13,7 +12,6 @@ const Login = () => {
   const { login } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
-  const { toast } = useToast()
 
   // Get the redirect path from location state, or default to home
   const from = (location.state as { from?: { pathname: string } })?.from?.pathname || '/'
@@ -30,9 +28,9 @@ const Login = () => {
     }
 
     try {
-      console.log('Submitting login form with email:', email)
+    
       await login(email, password)
-      console.log('Login successful, redirecting to:', from)
+     
       // After successful login, redirect to the intended page
       navigate(from, { replace: true })
     } catch (error: any) {

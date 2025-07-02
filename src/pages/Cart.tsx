@@ -5,7 +5,7 @@ import { useCart } from '@/contexts/CartContext'
 import { useAuth } from '@/contexts/AuthContext'
 
 const Cart = () => {
-  const { items, removeItem, updateQuantity, totalItems, totalAmount } = useCart()
+  const { items, removeItem, updateQuantity, totalItems, totalPrice } = useCart()
   const { user } = useAuth()
 
   if (items.length === 0) {
@@ -49,22 +49,22 @@ const Cart = () => {
               <Button
                 variant="outline"
                 size="icon"
-                onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                onClick={() => updateQuantity(item.id, (item.quantity || 1) - 1)}
               >
                 <Minus className="h-4 w-4" />
               </Button>
-              <span className="w-8 text-center">{item.quantity}</span>
+              <span className="w-8 text-center">{item.quantity || 1}</span>
               <Button
                 variant="outline"
                 size="icon"
-                onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                onClick={() => updateQuantity(item.id, (item.quantity || 1) + 1)}
               >
                 <Plus className="h-4 w-4" />
               </Button>
             </div>
 
             <div className="text-right min-w-[100px]">
-              <div className="font-semibold">₹{item.price * item.quantity}</div>
+              <div className="font-semibold">₹{item.price * (item.quantity || 1)}</div>
               <Button
                 variant="ghost"
                 size="icon"
@@ -82,7 +82,7 @@ const Cart = () => {
         <div className="space-y-2">
           <div className="flex justify-between text-muted-foreground">
             <span>Subtotal ({totalItems} items)</span>
-            <span>₹{totalAmount}</span>
+            <span>₹{totalPrice}</span>
           </div>
           <div className="flex justify-between text-muted-foreground">
             <span>Delivery Fee</span>
@@ -90,7 +90,7 @@ const Cart = () => {
           </div>
           <div className="flex justify-between font-semibold text-lg pt-2 border-t">
             <span>Total</span>
-            <span>₹{totalAmount + 50}</span>
+            <span>₹{totalPrice + 50}</span>
           </div>
         </div>
 

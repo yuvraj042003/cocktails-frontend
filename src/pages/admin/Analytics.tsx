@@ -212,7 +212,7 @@ const Analytics = () => {
                   fill="#8884d8"
                   dataKey="count"
                 >
-                  {analyticsData.orders.statusDistribution.map((entry, index) => (
+                  {analyticsData.orders.statusDistribution.map((_, index) => (
                     <Cell
                       key={`cell-${index}`}
                       fill={COLORS[index % COLORS.length]}
